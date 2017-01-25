@@ -1,8 +1,0 @@
-{
-  "generator-react-webpack": {
-    "appName": "weatherApp",
-    "style": "css",
-    "postcss": false,
-    "generatedWithVersion": 3
-  }
-}
