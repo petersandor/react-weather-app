@@ -5,9 +5,10 @@ import createLogger from 'redux-logger';
 import { browserHistory } from 'react-router';
 import { routerMiddleware } from 'react-router-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import uuid from 'node-uuid';
 
 import rootReducer from '../reducers';
-import { fetchWeather } from '../actions/weather';
+import { addLocation } from '../actions/weather';
 
 const logger = createLogger({
   level: 'info',
@@ -40,8 +41,8 @@ const configureStore = preloadedState => {
   // Add local weather if geolocation is available
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(pos => {
-      store.dispatch(fetchWeather({
-        id: 0,  // This will always be the first card
+      store.dispatch(addLocation({
+        id: uuid.v4(),
         coords: pos.coords
       }));
     });

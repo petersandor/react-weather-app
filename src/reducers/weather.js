@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import createReducer from '../utils/createReducer';
 import {
+  OPEN_NEW_LOCATION_DIALOG,
+  CLOSE_NEW_LOCATION_DIALOG,
+  CHANGE_INPUT_LOCATION_DIALOG,
   REQUEST_WEATHER,
   RECEIVE_WEATHER,
   ADD_WEATHER_LOCATION,
@@ -10,33 +13,51 @@ import {
 
 const preloadedState = {
   isGeolocationAvailable: !!navigator.geolocation,
+  isNewLocationModalOpen: false,
   locations: []
 };
 
 const weather = createReducer(preloadedState, {
-  [ADD_WEATHER_LOCATION]: (state, action) => {
-    const newState = Object.assign({}, state);
-
-    newState.locations.push({
-      id: state.locations.length, // I'm sorry
+  [OPEN_NEW_LOCATION_DIALOG]: (state, action) => ({
+    ...state,
+    isNewLocationModalOpen: true
+  }),
+  [CLOSE_NEW_LOCATION_DIALOG]: (state, action) => ({
+    ...state,
+    isNewLocationModalOpen: false
+  }),
+  [CHANGE_INPUT_LOCATION_DIALOG]: (state, action) => ({
+    ...state,
+    cityInputValue: action.value
+  }),
+  [ADD_WEATHER_LOCATION]: (state, action) => ({
+    ...state,
+    isNewLocationModalOpen: false,
+    locations: [...state.locations, {
       isLoading: true,
-      ...action.newLocation
-    });
-
-    return newState;
-  },
+      ...action.location
+    }]
+  }),
   [REMOVE_WEATHER_LOCATION]: (state, action) => {
     const newState = Object.assign({}, state);
 
-    newState.locations.splice(action.index, 1);
+    const findById = element => element.id === action.id;
+    const targetIndex = newState.locations.findIndex(findById);
+
+    newState.locations.splice(targetIndex, 1);
 
     return newState;
   },
   [RECEIVE_WEATHER]: (state, action) => {
     const newState = Object.assign({}, state);
 
-    newState.locations[action.id].data = action.data;
-    newState.locations[action.id].isLoading = false;
+    // Temp find item by id
+    const findById = element => element.id === action.id;
+
+    const location = newState.locations.find(findById);
+
+    location.data = action.data;
+    location.isLoading = false;
 
     return newState;
   }

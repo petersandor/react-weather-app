@@ -1,33 +1,42 @@
+import uuid from 'node-uuid';
+
 import weather from '../utils/weatherApiClient';
 
 export const REQUEST_WEATHER = 'REQUEST_WEATHER';
 export const RECEIVE_WEATHER = 'RECEIVE_WEATHER';
 export const RECEIVE_WEATHER_ERR = 'RECEIVE_WEATHER_ERR';
 
+export const OPEN_NEW_LOCATION_DIALOG = 'OPEN_NEW_LOCATION_DIALOG';
+export const CLOSE_NEW_LOCATION_DIALOG = 'CLOSE_NEW_LOCATION_DIALOG';
+export const CHANGE_INPUT_LOCATION_DIALOG = 'CHANGE_INPUT_LOCATION_DIALOG';
+
 export const ADD_WEATHER_LOCATION = 'ADD_WEATHER_LOCATION';
 export const REMOVE_WEATHER_LOCATION = 'REMOVE_WEATHER_LOCATION';
 
-export const addLocation = newLocation => {
-  return {
-    type: 'ADD_WEATHER_LOCATION',
-    newLocation
-  };
-};
+export const removeLocation = id => ({
+  type: 'REMOVE_WEATHER_LOCATION',
+  id
+});
 
-export const removeLocation = locationIndex => {
-  return {
-    type: 'REMOVE_WEATHER_LOCATION',
-    index: locationIndex
-  };
-};
+export const changeInputLocation = (event, value) => ({
+  type: 'CHANGE_INPUT_LOCATION_DIALOG',
+  value
+});
 
-export const fetchWeather = location => dispatch => {
+export const addLocation = location => dispatch => {
   // First we dispatch an action about the newly added location
-  dispatch(addLocation(location));
+  dispatch({
+    type: 'ADD_WEATHER_LOCATION',
+    location
+  });
 
   // If coordinates were specified, use them
   if ('coords' in location) {
     weather.setCoordinate(location.coords.latitude, location.coords.longitude);
+  }
+
+  if (location.cityName && location.cityName.length) {
+    weather.setCity(location.cityName);
   }
 
   // Use openweather-apis to query the data and dispatch actions on reply
@@ -53,4 +62,25 @@ export const fetchWeather = location => dispatch => {
     weather.setCoordinate(false, false);
     weather.setCity('');
   });
+};
+
+export const openNewLocationDialog = () => ({
+  type: 'OPEN_NEW_LOCATION_DIALOG'
+});
+
+export const closeNewLocationDialog = event => dispatch => {
+  // In any case, we want to close the dialog
+  dispatch({
+    type: 'CLOSE_NEW_LOCATION_DIALOG'
+  });
+
+  // If submit button was clicked, grab the cityName and add as a new location
+  if (event.type === 'SUBMIT') {
+    dispatch(
+      addLocation({
+        id: uuid.v4(),
+        cityName: event.value
+      })
+    );
+  }
 };
