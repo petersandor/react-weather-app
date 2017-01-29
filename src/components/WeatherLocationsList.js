@@ -3,6 +3,8 @@ import React, { PropTypes } from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import SnackBar from 'material-ui/Snackbar';
+
 import WeatherLocationCard from '../components/WeatherLocationCard';
 
 const listStyles = {
@@ -16,26 +18,35 @@ const addButtonStyles = {
 };
 
 const WeatherLocationsList = ({
-  // increment, incrementIfOdd, incrementAsync, decrement, counter,
+  addLocation, removeLocation, weather
 }) => (
   <div style={listStyles}>
-    <WeatherLocationCard />
-    <WeatherLocationCard />
-    <WeatherLocationCard />
-    <WeatherLocationCard />
+    {weather.locations.map((location) =>
+      <WeatherLocationCard
+        location={location}
+        onRequestRemove={removeLocation}
+        key={location.id}
+      />)}
 
-    <FloatingActionButton style={addButtonStyles}>
+    <FloatingActionButton
+      style={addButtonStyles}
+      onTouchTap={() => addLocation({ cityName: 'Prague' })}
+    >
       <ContentAdd />
     </FloatingActionButton>
+
+    <SnackBar
+      open={!weather.isGeolocationAvailable}
+      message="Geolocation not available"
+      onRequestClose={() => false}
+    />
   </div>
 );
 
-// Counter.propTypes = {
-//   increment: PropTypes.func.isRequired,
-//   incrementIfOdd: PropTypes.func.isRequired,
-//   incrementAsync: PropTypes.func.isRequired,
-//   decrement: PropTypes.func.isRequired,
-//   counter: PropTypes.number.isRequired,
-// };
+WeatherLocationsList.propTypes = {
+  addLocation: PropTypes.func.isRequired,
+  removeLocation: PropTypes.func.isRequired,
+  weather: PropTypes.object.isRequired
+};
 
 export default WeatherLocationsList;

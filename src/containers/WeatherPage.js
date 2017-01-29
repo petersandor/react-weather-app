@@ -6,7 +6,7 @@ import * as WeatherActions from '../actions/weather';
 
 
 const mapStateToProps = state => ({
-  weather: state.counter,
+  weather: state.weather,
 });
 
 

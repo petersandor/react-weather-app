@@ -7,7 +7,7 @@ import { routerMiddleware } from 'react-router-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from '../reducers';
-
+import { fetchWeather } from '../actions/weather';
 
 const logger = createLogger({
   level: 'info',
@@ -34,6 +34,16 @@ const configureStore = preloadedState => {
       const nextRootReducer = require('../reducers/index').default;
 
       store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  // Add local weather if geolocation is available
+  if ('geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      store.dispatch(fetchWeather({
+        id: 0,  // This will always be the first card
+        coords: pos.coords
+      }));
     });
   }
 

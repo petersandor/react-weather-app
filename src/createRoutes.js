@@ -6,7 +6,6 @@ import * as containers from './containers';
 
 
 const {
-  CounterPage,
   WeatherPage,
   NotFoundPage,
 } = containers;
@@ -18,7 +17,6 @@ const {
 const createRoutes = store => ( // eslint-disable-line no-unused-vars
   <Route component={App}>
     <Route path="/" component={WeatherPage} />
-    <Route path="/counter" component={CounterPage} />
     <Route path="*" component={NotFoundPage} />
   </Route>
 );
