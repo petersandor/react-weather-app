@@ -88,6 +88,10 @@ module.exports = {
           'postcss-loader',
         ],
       },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        loaders: ['url-loader?limit=10000']
+      },
     ],
   },
   postcss: [

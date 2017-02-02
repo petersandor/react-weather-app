@@ -9,33 +9,31 @@ import {
   CardText
 } from 'material-ui/Card';
 
-const cardStyles = {
-  width: 300,
-  minHeight: 200,
-  display: 'inline-block',
-  margin: '0 10px 10px'
-};
+// Card stylesheet
+import './WeatherLocationCard.css';
+
+
+// Assign custom attributes based on passed data
+const customAttributes = data => ({
+  'data-icon': data.weather[0].icon
+});
 
 const WeatherLocationCard = ({
   location, onRequestRemove
 }) => (
   location.isLoading ?
-    <Card style={cardStyles}>
+    <Card className="location-card">
       <CardText style={{ textAlign: 'center' }}>
         <CircularProgress />
       </CardText>
     </Card> :
-    <Card style={cardStyles}>
+    <Card className="location-card" {...customAttributes(location.data)}>
       <CardTitle
         title={`${location.data.name}, ${location.data.sys.country}`}
         subtitle={location.data.weather[0].main}
       />
       <CardText>
-        <div>
-          <span style={{ fontSize: '3em' }}>
-            {location.data.main.temp}°C
-          </span>
-        </div>
+        <div className="location-card__temp">{location.data.main.temp}°C</div>
       </CardText>
       <CardActions>
         <FlatButton

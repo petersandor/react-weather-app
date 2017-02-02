@@ -58,6 +58,10 @@ module.exports = {
           'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' // eslint-disable-line max-len
         ),
       },
+      {
+        test: /\.(jpe?g|png|gif)$/,
+        loaders: ['url-loader?limit=10000']
+      },
     ],
   },
   postcss: [
