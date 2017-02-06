@@ -9,14 +9,13 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import WeatherLocationCard from '../components/WeatherLocationCard';
 
-const listStyles = {
-  margin: '0 10'
-};
+const listStyles = {};
 
 const addButtonStyles = {
   position: 'fixed',
   bottom: 20,
-  right: 20
+  right: 20,
+  zIndex: 2
 };
 
 const WeatherLocationsList = ({

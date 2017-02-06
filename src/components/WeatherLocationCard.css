@@ -6,19 +6,24 @@
   margin: 0 10px 10px;
 }
 
-.location-card::after {
+.location-card__summary {
+  padding: 0 16px;
+}
+
+.location-card__summary__temp {
+  font-size: 2em;
+}
+
+.location-card__summary__icon {
+  padding-bottom: 10px;
+}
+
+.location-card__summary__icon::after {
   content: '';
-  position: absolute;
   display: block;
-  top: 15px;
-  right: 15px;
   width: 96px;
   height: 96px;
   background-size: contain;
-}
-
-.location-card__temp {
-  font-size: 3em;
 }
 
 /*
@@ -28,69 +33,69 @@
  */
 
 /* clear sky */
-.location-card[data-icon='01d']::after {
+.location-card__summary__icon[data-icon='01d']::after {
   background-image: url('../static/images/weather-icons/weather-clear.png');
 }
 
-.location-card[data-icon='01n']::after {
+.location-card__summary__icon[data-icon='01n']::after {
   background-image: url('../static/images/weather-icons/weather-clear-night.png');
 }
 
 /* few clouds */
-.location-card[data-icon='02d']::after {
+.location-card__summary__icon[data-icon='02d']::after {
   background-image: url('../static/images/weather-icons/weather-few-clouds.png');
 }
 
-.location-card[data-icon='02n']::after {
+.location-card__summary__icon[data-icon='02n']::after {
   background-image: url('../static/images/weather-icons/weather-few-clouds-night.png');
 }
 
 /* scattered clouds & broken clouds */
-.location-card[data-icon='03d']::after,
-.location-card[data-icon='04d']::after {
+.location-card__summary__icon[data-icon='03d']::after,
+.location-card__summary__icon[data-icon='04d']::after {
   background-image: url('../static/images/weather-icons/weather-clouds.png');
 }
 
-.location-card[data-icon='03n']::after,
-.location-card[data-icon='04n']::after {
+.location-card__summary__icon[data-icon='03n']::after,
+.location-card__summary__icon[data-icon='04n']::after {
   background-image: url('../static/images/weather-icons/weather-clouds-night.png');
 }
 
 /* shower rain */
-.location-card[data-icon='09d']::after {
+.location-card__summary__icon[data-icon='09d']::after {
   background-image: url('../static/images/weather-icons/weather-showers-day.png');
 }
 
-.location-card[data-icon='09n']::after {
+.location-card__summary__icon[data-icon='09n']::after {
   background-image: url('../static/images/weather-icons/weather-showers-night.png');
 }
 
 /* rain */
-.location-card[data-icon='10d']::after {
+.location-card__summary__icon[data-icon='10d']::after {
   background-image: url('../static/images/weather-icons/weather-rain-day.png');
 }
 
-.location-card[data-icon='10n']::after {
+.location-card__summary__icon[data-icon='10n']::after {
   background-image: url('../static/images/weather-icons/weather-rain-night.png');
 }
 
 /* thunderstorm */
-.location-card[data-icon='11d']::after {
+.location-card__summary__icon[data-icon='11d']::after {
   background-image: url('../static/images/weather-icons/weather-storm-day.png');
 }
 
-.location-card[data-icon='11n']::after {
+.location-card__summary__icon[data-icon='11n']::after {
   background-image: url('../static/images/weather-icons/weather-storm-night.png');
 }
 
 /* snow */
-.location-card[data-icon='13d']::after,
-.location-card[data-icon='13n']::after {
+.location-card__summary__icon[data-icon='13d']::after,
+.location-card__summary__icon[data-icon='13n']::after {
   background-image: url('../static/images/weather-icons/weather-snow.png');
 }
 
 /* mist */
-.location-card[data-icon='50d']::after,
-.location-card[data-icon='50n']::after {
+.location-card__summary__icon[data-icon='50d']::after,
+.location-card__summary__icon[data-icon='50n']::after {
   background-image: url('../static/images/weather-icons/weather-mist.png');
 }
