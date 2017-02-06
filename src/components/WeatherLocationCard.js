@@ -41,7 +41,8 @@ const WeatherLocationCard = ({
           {...iconAttr(location.data)}
         />
         <div className="location-card__summary__temp">
-          {location.data.main.temp}°C
+          {Number(location.data.main.temp).toFixed(1)}
+          <span className="location-card__summary__temp__unit">°C</span>
         </div>
       </div>
       <List>

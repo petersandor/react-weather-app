@@ -8,14 +8,27 @@
 
 .location-card__summary {
   padding: 0 16px;
+  height: 96px;
 }
 
 .location-card__summary__temp {
+  float: left;
   font-size: 2em;
+  line-height: normal;
+  padding: 29px 0;
+}
+
+.location-card__summary__temp__unit {
+  position: relative;
+  top: -10px;
+  margin-left: 5px;
+  font-size: .5em;
 }
 
 .location-card__summary__icon {
-  padding-bottom: 10px;
+  text-align: right;
+  margin-left: 10px;
+  float: right;
 }
 
 .location-card__summary__icon::after {
