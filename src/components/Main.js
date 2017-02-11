@@ -19,6 +19,7 @@ const Main = ({ children }) => (
       className="app-bar"
       showMenuIconButton={false}
       iconElementRight={projectLink()}
+      iconStyleRight={{ marginRight: 0, marginTop: 16 }}
       zDepth={2}
     />
     {children}
