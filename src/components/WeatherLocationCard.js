@@ -1,8 +1,7 @@
 import React, { PropTypes } from 'react';
 
 import CircularProgress from 'material-ui/CircularProgress';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 import {
@@ -41,7 +40,7 @@ const WeatherLocationCard = ({
           {...iconAttr(location.data)}
         />
         <div className="location-card__summary__temp">
-          {Number(location.data.main.temp).toFixed(1)}
+          {location.data.main.temp}
           <span className="location-card__summary__temp__unit">°C</span>
         </div>
       </div>
@@ -74,7 +73,9 @@ const WeatherLocationCard = ({
         <ListItem
           disabled
           primaryText="Wind direction"
-          secondaryText={`${location.data.wind.deg}°`}
+          secondaryText={
+            location.data.wind.deg ? `${location.data.wind.deg}°` : 'N/A'
+          }
         />
         <ListItem
           disabled
