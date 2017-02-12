@@ -14,7 +14,10 @@ import {
 const preloadedState = {
   isGeolocationAvailable: !!navigator.geolocation,
   isNewLocationModalOpen: false,
-  locations: []
+  locations: {
+    byId: {},
+    allIds: []
+  }
 };
 
 const weather = createReducer(preloadedState, {
@@ -30,36 +33,57 @@ const weather = createReducer(preloadedState, {
     ...state,
     cityInputValue: action.value
   }),
-  [ADD_WEATHER_LOCATION]: (state, action) => ({
-    ...state,
-    isNewLocationModalOpen: false,
-    locations: [...state.locations, {
-      isLoading: true,
-      ...action.location
-    }]
-  }),
+  [ADD_WEATHER_LOCATION]: (state, action) => {
+    const newLocation = action.location;
+
+    return {
+      ...state,
+      locations: {
+        allIds: [
+          ...state.locations.allIds,
+          newLocation.id
+        ],
+        byId: {
+          ...state.locations.byId,
+          [newLocation.id]: {
+            isLoading: true
+          }
+        }
+      }
+    };
+  },
   [REMOVE_WEATHER_LOCATION]: (state, action) => {
-    const newState = Object.assign({}, state);
+    const newByIdsObj = Object.assign({}, state.locations.byId);
+    delete newByIdsObj[action.id];
 
-    const findById = element => element.id === action.id;
-    const targetIndex = newState.locations.findIndex(findById);
+    const newIds = state.locations.allIds.slice();
+    const idIndex = newIds.indexOf(action.id);
+    newIds.splice(idIndex, 1);
 
-    newState.locations.splice(targetIndex, 1);
-
-    return newState;
+    return {
+      ...state,
+      locations: {
+        ...state.locations,
+        allIds: newIds,
+        byId: newByIdsObj
+      }
+    };
   },
   [RECEIVE_WEATHER]: (state, action) => {
-    const newState = Object.assign({}, state);
-
-    // Temp find item by id
-    const findById = element => element.id === action.id;
-
-    const location = newState.locations.find(findById);
-
-    location.data = action.data;
-    location.isLoading = false;
-
-    return newState;
+    return {
+      ...state,
+      locations: {
+        ...state.locations,
+        byId: {
+          ...state.locations.byId,
+          [action.id]: {
+            ...state.locations.byId[action.id],
+            data: action.data,
+            isLoading: false
+          }
+        }
+      }
+    };
   }
 });
 

@@ -28,11 +28,12 @@ const WeatherLocationsList = ({
   <div style={listStyles}>
     {
       /* Render a card for each location */
-      weather.locations.map(location =>
+      weather.locations.allIds.map(locId =>
         <WeatherLocationCard
-          location={location}
+          location={weather.locations.byId[locId]}
           onRequestRemove={removeLocation}
-          key={location.id}
+          key={locId}
+          id={locId}
         />)
     }
 

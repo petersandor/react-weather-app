@@ -21,7 +21,7 @@ const iconAttr = data => ({
 });
 
 const WeatherLocationCard = ({
-  location, onRequestRemove
+  id, location, onRequestRemove
 }) => (
   location.isLoading ?
     <Card className="location-card">
@@ -95,13 +95,14 @@ const WeatherLocationCard = ({
       <CardActions>
         <FlatButton
           label="Remove"
-          onTouchTap={() => onRequestRemove(location.id)}
+          onTouchTap={() => onRequestRemove(id)}
         />
       </CardActions>
     </Card>
 );
 
 WeatherLocationCard.propTypes = {
+  id: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
   onRequestRemove: PropTypes.func
 };
