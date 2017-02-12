@@ -19,6 +19,7 @@ const addButtonStyles = {
 };
 
 const WeatherLocationsList = ({
+  toggleLocationUnit,
   removeLocation,
   openNewLocationDialog,
   closeNewLocationDialog,
@@ -32,6 +33,7 @@ const WeatherLocationsList = ({
         <WeatherLocationCard
           location={weather.locations.byId[locId]}
           onRequestRemove={removeLocation}
+          onUnitToggle={toggleLocationUnit}
           key={locId}
           id={locId}
         />)
@@ -82,6 +84,7 @@ const WeatherLocationsList = ({
 );
 
 WeatherLocationsList.propTypes = {
+  toggleLocationUnit: PropTypes.func.isRequired,
   removeLocation: PropTypes.func.isRequired,
   openNewLocationDialog: PropTypes.func,
   closeNewLocationDialog: PropTypes.func,

@@ -13,6 +13,13 @@ export const CHANGE_INPUT_LOCATION_DIALOG = 'CHANGE_INPUT_LOCATION_DIALOG';
 export const ADD_WEATHER_LOCATION = 'ADD_WEATHER_LOCATION';
 export const REMOVE_WEATHER_LOCATION = 'REMOVE_WEATHER_LOCATION';
 
+export const TOGGLE_WEATHER_LOCATION_UNIT = 'TOGGLE_WEATHER_LOCATION_UNIT';
+
+export const toggleLocationUnit = id => ({
+  type: 'TOGGLE_WEATHER_LOCATION_UNIT',
+  id
+});
+
 export const removeLocation = id => ({
   type: 'REMOVE_WEATHER_LOCATION',
   id

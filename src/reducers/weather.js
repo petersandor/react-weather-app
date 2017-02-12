@@ -7,7 +7,8 @@ import {
   REQUEST_WEATHER,
   RECEIVE_WEATHER,
   ADD_WEATHER_LOCATION,
-  REMOVE_WEATHER_LOCATION
+  REMOVE_WEATHER_LOCATION,
+  TOGGLE_WEATHER_LOCATION_UNIT
 } from '../actions/weather';
 
 
@@ -46,7 +47,8 @@ const weather = createReducer(preloadedState, {
         byId: {
           ...state.locations.byId,
           [newLocation.id]: {
-            isLoading: true
+            isLoading: true,
+            unit: 'C'
           }
         }
       }
@@ -80,6 +82,23 @@ const weather = createReducer(preloadedState, {
             ...state.locations.byId[action.id],
             data: action.data,
             isLoading: false
+          }
+        }
+      }
+    };
+  },
+  [TOGGLE_WEATHER_LOCATION_UNIT]: (state, action) => {
+    const prevUnit = state.locations.byId[action.id].unit;
+
+    return {
+      ...state,
+      locations: {
+        ...state.locations,
+        byId: {
+          ...state.locations.byId,
+          [action.id]: {
+            ...state.locations.byId[action.id],
+            unit: prevUnit === 'C' ? 'F' : 'C'
           }
         }
       }

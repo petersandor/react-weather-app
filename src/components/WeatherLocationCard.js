@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
-
+import tuc from 'temp-units-conv';
 import CircularProgress from 'material-ui/CircularProgress';
 import { List, ListItem } from 'material-ui/List';
+import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
 import FlatButton from 'material-ui/FlatButton';
 import {
@@ -20,8 +21,28 @@ const iconAttr = data => ({
   'data-icon': data.weather[0].icon
 });
 
+// Naive temp unit conversion (default is Celsius for API calls)
+// TODO: redesign the whole damn thing so it will launch a new request
+// with desired unit as a URL parameter so all this nonsense can be avoided
+// TODO 0.1: also keep the previous data and replace only if the calc date is !=
+const convertUnit = (number, targetUnit, sourceUnit = 'C') => {
+  if (sourceUnit === targetUnit) {
+    return number;
+  }
+
+  if (targetUnit === 'F') {
+    return tuc.c2f(number);
+  }
+
+  if (targetUnit === 'C') {
+    return tuc.f2c(number);
+  }
+
+  return number;
+};
+
 const WeatherLocationCard = ({
-  id, location, onRequestRemove
+  id, location, onRequestRemove, onUnitToggle
 }) => (
   location.isLoading ?
     <Card className="location-card">
@@ -40,20 +61,26 @@ const WeatherLocationCard = ({
           {...iconAttr(location.data)}
         />
         <div className="location-card__summary__temp">
-          {location.data.main.temp}
-          <span className="location-card__summary__temp__unit">°C</span>
+          {convertUnit(location.data.main.temp, location.unit)}
+          <span className="location-card__summary__temp__unit">
+            °{location.unit}
+          </span>
         </div>
       </div>
       <List>
         <ListItem
           disabled
           primaryText="Minimum temperature"
-          secondaryText={`${location.data.main.temp_min}°C`}
+          secondaryText={
+            `${convertUnit(location.data.main.temp_min, location.unit)}°${location.unit}`
+          }
         />
         <ListItem
           disabled
           primaryText="Maximum temperature"
-          secondaryText={`${location.data.main.temp_max}°C`}
+          secondaryText={
+            `${convertUnit(location.data.main.temp_max, location.unit)}°${location.unit}`
+          }
         />
         <ListItem
           disabled
@@ -82,13 +109,18 @@ const WeatherLocationCard = ({
           primaryText="Visibility"
           secondaryText={`${location.data.visibility}m`}
         />
-      </List>
-      <Divider />
-      <List>
         <ListItem
           disabled
           primaryText="Time of data calculation"
           secondaryText={new Date(location.data.dt * 1000).toTimeString()}
+        />
+      </List>
+      <Divider />
+      <List>
+        <ListItem
+          primaryText="Toggle units"
+          secondaryText={`${location.unit}°`}
+          rightToggle={<Toggle onToggle={event => onUnitToggle(id, event)} />}
         />
       </List>
       <Divider />
@@ -104,7 +136,8 @@ const WeatherLocationCard = ({
 WeatherLocationCard.propTypes = {
   id: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired,
-  onRequestRemove: PropTypes.func
+  onRequestRemove: PropTypes.func,
+  onUnitToggle: PropTypes.func
 };
 
 export default WeatherLocationCard;
