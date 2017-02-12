@@ -3,6 +3,7 @@
   width: 300px;
   min-height: 200px;
   display: inline-block;
+  vertical-align: top;
   margin: 0 10px 10px;
 }
 
