@@ -120,7 +120,12 @@ const WeatherLocationCard = ({
         <ListItem
           primaryText="Toggle units"
           secondaryText={`${location.unit}°`}
-          rightToggle={<Toggle onToggle={event => onUnitToggle(id, event)} />}
+          rightToggle={
+            <Toggle
+              onToggle={event => onUnitToggle(id, event)}
+              toggled={location.unit === 'F'}
+            />
+          }
         />
       </List>
       <Divider />
