@@ -77,6 +77,7 @@ const WeatherLocationsList = ({
       <TextField
         id="newCityInput"
         fullWidth
+        value={weather.cityInputValue}
         onChange={changeInputLocation}
       />
     </Dialog>

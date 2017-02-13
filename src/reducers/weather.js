@@ -39,6 +39,7 @@ const weather = createReducer(preloadedState, {
 
     return {
       ...state,
+      cityInputValue: '',
       locations: {
         allIds: [
           ...state.locations.allIds,
