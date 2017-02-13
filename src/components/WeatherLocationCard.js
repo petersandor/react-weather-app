@@ -26,19 +26,19 @@ const iconAttr = data => ({
 // with desired unit as a URL parameter so all this nonsense can be avoided
 // TODO 0.1: also keep the previous data and replace only if the calc date is !=
 const convertUnit = (number, targetUnit, sourceUnit = 'C') => {
-  if (sourceUnit === targetUnit) {
-    return number;
+  let result = number;
+
+  if (sourceUnit !== targetUnit) {
+    if (targetUnit === 'F') {
+      result = tuc.c2f(number);
+    }
+
+    if (targetUnit === 'C') {
+      result = tuc.f2c(number);
+    }
   }
 
-  if (targetUnit === 'F') {
-    return tuc.c2f(number);
-  }
-
-  if (targetUnit === 'C') {
-    return tuc.f2c(number);
-  }
-
-  return number;
+  return Number.isInteger(result) ? result : result.toFixed(1);
 };
 
 const WeatherLocationCard = ({
