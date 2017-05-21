@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
 import SnackBar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import WeatherLocationCard from '../components/WeatherLocationCard';
+import LocationAutocomplete from '../components/LocationAutocomplete';
 
 const listStyles = {};
 
@@ -74,11 +74,15 @@ const WeatherLocationsList = ({
         />]
       }
     >
-      <TextField
-        id="newCityInput"
-        fullWidth
-        value={weather.cityInputValue}
-        onChange={changeInputLocation}
+      <LocationAutocomplete
+        clearItemsOnError
+        inputProps={{
+          searchText: '',
+          onChange: changeInputLocation
+        }}
+        options={{
+          types: ['(cities)']
+        }}
       />
     </Dialog>
   </div>

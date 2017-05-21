@@ -1,6 +1,4 @@
 import React, { PropTypes } from 'react';
-import tuc from 'temp-units-conv';
-import CircularProgress from 'material-ui/CircularProgress';
 import { List, ListItem } from 'material-ui/List';
 import Toggle from 'material-ui/Toggle';
 import Divider from 'material-ui/Divider';
@@ -8,9 +6,11 @@ import FlatButton from 'material-ui/FlatButton';
 import {
   Card,
   CardActions,
-  CardTitle,
-  CardText
+  CardTitle
 } from 'material-ui/Card';
+
+// Sub views
+import CardLoading from './CardLoading';
 
 // Card stylesheet
 import './WeatherLocationCard.css';
@@ -18,112 +18,89 @@ import './WeatherLocationCard.css';
 
 // Assign custom attributes based on passed data
 const iconAttr = data => ({
-  'data-icon': data.weather[0].icon
+  'data-icon': data.icon
 });
-
-// Naive temp unit conversion (default is Celsius for API calls)
-// TODO: redesign the whole damn thing so it will launch a new request
-// with desired unit as a URL parameter so all this nonsense can be avoided
-// TODO 0.1: also keep the previous data and replace only if the calc date is !=
-const convertUnit = (number, targetUnit, sourceUnit = 'C') => {
-  let result = number;
-
-  if (sourceUnit !== targetUnit) {
-    if (targetUnit === 'F') {
-      result = tuc.c2f(number);
-    }
-
-    if (targetUnit === 'C') {
-      result = tuc.f2c(number);
-    }
-  }
-
-  return Number.isInteger(result) ? result : result.toFixed(1);
-};
 
 const WeatherLocationCard = ({
   id, location, onRequestRemove, onUnitToggle
-}) => (
-  location.isLoading ?
-    <Card className="location-card">
-      <CardText style={{ textAlign: 'center' }}>
-        <CircularProgress />
-      </CardText>
-    </Card> :
+}) => {
+  const units = location.units;
+  const tempUnit = units ? units.temperature.toUpperCase() : location.unit;
+
+  return location.isLoading ?
+    <CardLoading /> :
     <Card className="location-card">
       <CardTitle
-        title={`${location.data.name}, ${location.data.sys.country}`}
-        subtitle={location.data.weather[0].main}
+        title={location ? location.name : 'Not found'}
+        subtitle={location ? location.currently.summary : ''}
       />
       <div className="location-card__summary">
         <div
           className="location-card__summary__icon"
-          {...iconAttr(location.data)}
+          {...iconAttr(location.currently)}
         />
         <div className="location-card__summary__temp">
-          {convertUnit(location.data.main.temp, location.unit)}
+          {location.currently.temperature}
           <span className="location-card__summary__temp__unit">
-            °{location.unit}
+            °{units.temperature.toUpperCase()}
           </span>
         </div>
       </div>
       <List>
         <ListItem
           disabled
-          primaryText="Minimum temperature"
+          primaryText="Feels like"
           secondaryText={
-            `${convertUnit(location.data.main.temp_min, location.unit)}°${location.unit}`
-          }
-        />
-        <ListItem
-          disabled
-          primaryText="Maximum temperature"
-          secondaryText={
-            `${convertUnit(location.data.main.temp_max, location.unit)}°${location.unit}`
+            `${location.currently.apparentTemperature}°${tempUnit}`
           }
         />
         <ListItem
           disabled
           primaryText="Humidity"
-          secondaryText={`${location.data.main.humidity}%`}
+          secondaryText={`${location.currently.humidity}%`}
         />
         <ListItem
           disabled
           primaryText="Pressure"
-          secondaryText={`${location.data.main.pressure}hPa`}
+          secondaryText={`${location.currently.pressure} ${units.pressure}`}
         />
         <ListItem
           disabled
           primaryText="Wind speed"
-          secondaryText={`${location.data.wind.speed}m/s`}
+          secondaryText={`${location.currently.windSpeed} ${units.windSpeed}`}
         />
         <ListItem
           disabled
           primaryText="Wind direction"
           secondaryText={
-            location.data.wind.deg ? `${location.data.wind.deg}°` : 'N/A'
+            `${location.currently.windDirection}`
           }
         />
-        <ListItem
-          disabled
-          primaryText="Visibility"
-          secondaryText={`${location.data.visibility}m`}
-        />
+        {
+          location.currently.visibility ?
+            <ListItem
+              disabled
+              primaryText="Visibility"
+              secondaryText={
+                `${location.currently.visibility} ${units.visibility}`
+              }
+            /> : ''
+        }
         <ListItem
           disabled
           primaryText="Time of data calculation"
-          secondaryText={new Date(location.data.dt * 1000).toTimeString()}
+          secondaryText={location.currently.dateTime.toString()}
         />
       </List>
       <Divider />
       <List>
         <ListItem
-          primaryText="Toggle units"
-          secondaryText={`${location.unit}°`}
+          primaryText="Change units"
+          secondaryText={`°${tempUnit}`}
           rightToggle={
             <Toggle
-              onToggle={event => onUnitToggle(id, event)}
-              toggled={location.unit === 'F'}
+              onToggle={event => onUnitToggle(id, location, event)}
+              toggled={location.unit !== 'C'}
             />
           }
         />
@@ -135,8 +112,8 @@ const WeatherLocationCard = ({
           onTouchTap={() => onRequestRemove(id)}
         />
       </CardActions>
-    </Card>
-);
+    </Card>;
+};
 
 WeatherLocationCard.propTypes = {
   id: PropTypes.string.isRequired,

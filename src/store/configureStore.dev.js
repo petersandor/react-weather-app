@@ -5,10 +5,8 @@ import createLogger from 'redux-logger';
 import { browserHistory } from 'react-router';
 import { routerMiddleware } from 'react-router-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import uuid from 'node-uuid';
 
 import rootReducer from '../reducers';
-import { addLocation } from '../actions/weather';
 
 const logger = createLogger({
   level: 'info',
@@ -35,16 +33,6 @@ const configureStore = preloadedState => {
       const nextRootReducer = require('../reducers/index').default;
 
       store.replaceReducer(nextRootReducer);
-    });
-  }
-
-  // Add local weather if geolocation is available
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(pos => {
-      store.dispatch(addLocation({
-        id: uuid.v4(),
-        coords: pos.coords
-      }));
     });
   }
 

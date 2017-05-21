@@ -1,12 +1,9 @@
-import weather from 'openweather-apis';
+import DarkSky from 'dark-sky-api';
 
 // Hardcode the key here in the client since we have no API proxy
 // and there are no alternative APIs that do not require keys (and are free)
 // if you know about some, please let me know
-const API_KEY = 'a7526a7fa2def7481e47ebb039a9cae9';
+DarkSky.apiKey = '394d3340d5fb35ab845beffae8aa4be8';
+DarkSky.units = 'si';
 
-// Set the basics
-weather.setLang('en');
-weather.setAPPID(API_KEY);
-
-export default weather;
+export default DarkSky;

@@ -19,7 +19,9 @@
     "version": "npm run build",
     "postversion": "git push && git push --tags && npm run clean",
     "prepublish": "npm run clean && npm run build",
-    "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json"
+    "postinstall": "node node_modules/fbjs-scripts/node/check-dev-engines.js package.json",
+    "predeploy": "npm run clean && npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "author": {
     "name": "Peter Sandor",
@@ -58,6 +60,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "fbjs-scripts": "^0.7.1",
     "file-loader": "^0.10.0",
+    "gh-pages": "^0.12.0",
     "html-webpack-plugin": "^2.24.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^17.0.3",
@@ -79,9 +82,10 @@
     "webpack-hot-middleware": "^2.13.2"
   },
   "dependencies": {
+    "@google/maps": "^0.3.1",
+    "dark-sky-api": "^0.5.26",
     "material-ui": "^0.16.7",
     "node-uuid": "^1.4.7",
-    "openweather-apis": "^3.0.2",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-redux": "^4.4.6",
@@ -89,8 +93,7 @@
     "react-router-redux": "^4.0.7",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0",
-    "temp-units-conv": "^0.1.2"
+    "redux-thunk": "^2.1.0"
   },
   "jest": {
     "moduleNameMapper": {

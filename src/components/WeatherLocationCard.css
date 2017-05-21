@@ -47,16 +47,16 @@
  */
 
 /* clear sky */
-.location-card__summary__icon[data-icon='01d']::after {
+.location-card__summary__icon[data-icon='clear-day']::after {
   background-image: url('../static/images/weather-icons/weather-clear.png');
 }
 
-.location-card__summary__icon[data-icon='01n']::after {
+.location-card__summary__icon[data-icon='clear-night']::after {
   background-image: url('../static/images/weather-icons/weather-clear-night.png');
 }
 
 /* few clouds */
-.location-card__summary__icon[data-icon='02d']::after {
+.location-card__summary__icon[data-icon='cloudy']::after {
   background-image: url('../static/images/weather-icons/weather-few-clouds.png');
 }
 
@@ -65,12 +65,12 @@
 }
 
 /* scattered clouds & broken clouds */
-.location-card__summary__icon[data-icon='03d']::after,
+.location-card__summary__icon[data-icon='partly-cloudy-day']::after,
 .location-card__summary__icon[data-icon='04d']::after {
   background-image: url('../static/images/weather-icons/weather-clouds.png');
 }
 
-.location-card__summary__icon[data-icon='03n']::after,
+.location-card__summary__icon[data-icon='partly-cloudy-night']::after,
 .location-card__summary__icon[data-icon='04n']::after {
   background-image: url('../static/images/weather-icons/weather-clouds-night.png');
 }
@@ -85,7 +85,7 @@
 }
 
 /* rain */
-.location-card__summary__icon[data-icon='10d']::after {
+.location-card__summary__icon[data-icon='rain']::after {
   background-image: url('../static/images/weather-icons/weather-rain-day.png');
 }
 
@@ -94,7 +94,7 @@
 }
 
 /* thunderstorm */
-.location-card__summary__icon[data-icon='11d']::after {
+.location-card__summary__icon[data-icon='thunderstorm']::after {
   background-image: url('../static/images/weather-icons/weather-storm-day.png');
 }
 
@@ -103,13 +103,13 @@
 }
 
 /* snow */
-.location-card__summary__icon[data-icon='13d']::after,
+.location-card__summary__icon[data-icon='snow']::after,
 .location-card__summary__icon[data-icon='13n']::after {
   background-image: url('../static/images/weather-icons/weather-snow.png');
 }
 
 /* mist */
-.location-card__summary__icon[data-icon='50d']::after,
+.location-card__summary__icon[data-icon='fog']::after,
 .location-card__summary__icon[data-icon='50n']::after {
   background-image: url('../static/images/weather-icons/weather-mist.png');
 }
