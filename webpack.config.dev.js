@@ -1,14 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const simpleVars = require('postcss-simple-vars');
-const nested = require('postcss-nested');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // eslint-disable-line max-len
 
 
 module.exports = {
-  debug: true,
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
@@ -93,12 +89,5 @@ module.exports = {
         loaders: ['url-loader?limit=10000']
       },
     ],
-  },
-  postcss: [
-    autoprefixer({
-      browsers: ['last 2 version', 'IE 10'],
-    }),
-    simpleVars,
-    nested,
-  ],
+  }
 };

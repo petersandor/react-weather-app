@@ -1,4 +1,4 @@
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 
 import DarkSky from '../utils/weatherApiClient';
 import googleMapsClient from '../utils/mapsApiClient';

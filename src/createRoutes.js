@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router';
-import uuid from 'node-uuid';
+import uuid from 'uuid';
 
 import { addLocation } from './actions/weather';
 
