@@ -17,6 +17,8 @@
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": ["error", {
       "extensions": [".js"]
-    }]
+    }],
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }]
   }
 }
