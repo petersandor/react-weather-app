@@ -2,10 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const simpleVars = require('postcss-simple-vars');
-const nested = require('postcss-nested');
-
 
 module.exports = {
   devtool: 'cheap-module-source-map',
@@ -46,29 +42,22 @@ module.exports = {
       },
       {
         test: /^((?!\.module).)*\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader'
-        ),
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        }),
       },
       {
         test: /\.module\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' // eslint-disable-line max-len
-        ),
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader' // eslint-disable-line max-len
+        }),
       },
       {
         test: /\.(jpe?g|png|gif)$/,
         loaders: ['url-loader?limit=10000']
       },
     ],
-  },
-  postcss: [
-    autoprefixer({
-      browsers: ['last 2 version', 'IE 10'],
-    }),
-    simpleVars,
-    nested,
-  ],
+  }
 };
